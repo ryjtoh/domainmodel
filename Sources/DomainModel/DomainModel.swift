@@ -47,9 +47,8 @@ public struct Money {
     }
     
     func add(_ money: Money) -> Money{
-        let converted = money.convert(self.currency).amount
-        
-        return Money(amount:converted + self.amount, currency: self.currency)
+        let converted = self.convert(money.currency).amount
+        return Money(amount:converted + money.amount, currency: money.currency)
     }
     
     func subtract(_ money: Money) -> Money{
@@ -95,7 +94,7 @@ public class Job {
     }
     
     func raise(byPercent: Double) {
-        let decimal = (byPercent / 100.0) + 1.0
+        let decimal = byPercent + 1.0
         switch self.type {
         case .Hourly(let value):
             self.type = JobType.Hourly(value * decimal)
@@ -124,7 +123,7 @@ public class Person {
     }
     
     func toString() -> String {
-        return "Person: firstName: \(self.firstName) lastName: \(self.lastName) age: \(self.age) job: \(String(describing: self.job)) spouse: \(String(describing: self.spouse?.firstName))"
+        return "[Person: firstName:\(self.firstName) lastName:\(self.lastName) age:\(self.age) job:\(String(describing: self.job)) spouse:\(String(describing: self.spouse?.firstName))]"
     }
 }
 
