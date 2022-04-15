@@ -111,9 +111,34 @@ public class Person {
     var firstName: String
     var lastName: String
     var age: Int
-    var job: Job?
-    var spouse: Person?
+    var _job: Job?
+    var job: Job? {
+        get {
+            return self._job
+        }
+        set(newJob) {
+            if (self.age >= 16) {
+                self._job = newJob
+            } else {
+                self._job = nil
+            }
+        }
+    }
+    var _spouse: Person?
+    var spouse: Person? {
+        get {
+            return self._spouse
+        }
+        set(newSpouse) {
+            if (self.age >= 18) {
+                self._spouse = newSpouse
+            } else {
+                self._spouse = nil
+            }
+        }
+    }
     var hasSpouse: Bool
+    
     
     init(firstName: String, lastName: String, age: Int) {
         self.firstName = firstName
@@ -154,11 +179,11 @@ public class Family {
     
     func householdIncome() -> Int {
         var total = 0
-        if (self.members[0].job != nil) {
-            total += (self.members[0].job?.calculateIncome(2000))!
-        }
-        if (self.members[1].job != nil) {
-            total += (self.members[1].job?.calculateIncome(2000))!
+        
+        for member in members {
+            if (member.job != nil) {
+                total += (member.job?.calculateIncome(2000))!
+            }
         }
         return total
     }
